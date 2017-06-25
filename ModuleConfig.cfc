@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Joel Tobey <joeltobey@gmail.com>
+ * Copyright 2017 Joel Tobey <joeltobey@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ component {
     this.author             = "Joel Tobey";
     this.webURL             = "https://github.com/joeltobey/cfboom-gson";
     this.description        = "The cfboom-gson module provides a wrapper facade to the gson project (https://www.javadoc.io/doc/com.google.code.gson/gson/).";
-    this.version            = "1.0.0";
+    this.version            = "0.9.0";
     // If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
     this.viewParentLookup   = true;
     // If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -38,7 +38,7 @@ component {
     // Auto-map models
     this.autoMapModels      = true;
     // Module Dependencies
-    this.dependencies       = [ "cbjavaloader", "cfboom-lang" ];
+    this.dependencies       = [ "cfboom-lang" ];
 
     function configure() {}
 
@@ -46,8 +46,11 @@ component {
      * Fired when the module is registered and activated.
      */
     function onLoad() {
-        // Class load antisamy
-        wirebox.getInstance( "loader@cbjavaloader" ).appendPaths( modulePath & "/lib" );
+        try {
+            createObject("java", "com.google.gson.JsonPrimitive");
+        } catch (any ex) {
+            wirebox.getInstance( "loader@cbjavaloader" ).appendPaths( modulePath & "/lib" );
+        }
     }
 
     /**

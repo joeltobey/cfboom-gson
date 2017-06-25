@@ -1,0 +1,42 @@
+{
+    "name":"<cfboom/> GSON",
+    "version":"0.9.0",
+    "author":"Joel Tobey <joeltobey@gmail.com>",
+    "slug":"cfboom-gson",
+    "type":"modules",
+    "homepage":"https://github.com/joeltobey/cfboom-gson",
+    "documentation":"https://github.com/joeltobey/cfboom-gson/wiki",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/joeltobey/cfboom-gson"
+    },
+    "location": "https://github.com/joeltobey/cfboom-gson/releases/download/v0.9.0/cfboom-gson-v0.9.0.zip",
+    "shortDescription":"The cfboom-gson module provides a wrapper facade to the gson project (https://www.javadoc.io/doc/com.google.code.gson/gson/).",
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
+        "Joel Tobey <joeltobey@gmail.com>"
+    ],
+    "engines":[
+        {
+            "type":"lucee",
+            "version":">4.5"
+        },
+        {
+            "type":"adobe",
+            "version":">9.02"
+        }
+    ],
+    "dependencies":{
+        "cfboom-lang":"1.0.0"
+    },
+    "ignore":[
+        "**/.*",
+        "tests",
+        "*/.md"
+    ]
+}
