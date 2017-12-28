@@ -1,7 +1,8 @@
 sudo: required
 
 env:
-  - TEST_SUITE_URL=http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm
+  global:
+    - TEST_SUITE_URL="http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm"
 
 services:
   - docker
