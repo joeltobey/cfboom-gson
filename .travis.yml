@@ -17,10 +17,9 @@ install:
 
 before_script:
   - docker run -d -p 8888:8888 --rm cfboom/gson:latest
-  - sudo echo $TEST_SUITE_URL
-  - curl $TEST_SUITE_URL
+  - curl http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm
 
 script: > 
-    testResults="echo $(box testbox run runner=$TEST_SUITE_URL)";
+    testResults="echo $(box testbox run runner=http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm)";
     echo "$testResults";
     if grep -i "\[Failures: [1-9][0-9]\?[0-9]\?\]\|\[Errors: [1-9][0-9]\?[0-9]\?\]\|<t[^>]*>\|<b[^>]*>" <<< $testResults;  then exit 1; fi
