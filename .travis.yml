@@ -16,7 +16,7 @@ install:
   - docker build -t cfboom/gson .
 
 before_script:
-  - docker run -d -p 8888:8888 --rm cfboom/gson:latest
+  - docker run -d -p 8888:8888 cfboom/gson:latest
   - curl http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm
 
 script: > 
