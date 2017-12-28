@@ -1,0 +1,10 @@
+version: '3'
+services:
+  cfboom-gson:
+    build: .
+    image: cfboom/gson
+    container_name: cfboom-gson
+    ports:
+    - "8888:8888"
+    volumes:
+    - .:/var/www/modules_app/cfboom-gson
