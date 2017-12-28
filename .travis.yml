@@ -1,9 +1,5 @@
 sudo: required
 
-env:
-  global:
-    - TEST_SUITE_URL="http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm"
-
 services:
   - docker
 
@@ -17,7 +13,6 @@ install:
 
 before_script:
   - docker run -d -p 8888:8888 --rm cfboom/gson:latest
-  - curl -v http://0.0.0.0:8888/modules_app/cfboom-gson/tests/runner.cfm
 
 script: > 
     testResults="echo $(box testbox run runner=http://localhost:8888/modules_app/cfboom-gson/tests/runner.cfm)";
