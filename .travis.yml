@@ -9,13 +9,14 @@ services:
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
   - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
-  - sudo apt-get update && sudo apt-get install commandbox
+  - sudo apt-get update && sudo apt-get install commandbox && sudo echo "${box version}"
 
 install:
   - docker build -t cfboom/gson .
 
 before_script:
   - docker run -d -p 8888:8888 --rm cfboom/gson:latest
+  - sudo echo $TEST_SUITE_URL
   - curl $TEST_SUITE_URL
 
 script: > 
