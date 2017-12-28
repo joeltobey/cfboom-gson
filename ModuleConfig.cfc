@@ -17,45 +17,72 @@
 /**
  * @author Joel Tobey
  */
-component {
+component
+  output="false"
+{
+  // Module Properties
+  this.title              = "cfboom gson";
+  this.author             = "Joel Tobey";
+  this.webURL             = "https://github.com/joeltobey/cfboom-gson";
+  this.description        = "The cfboom-gson module provides a wrapper facade to the gson project (https://www.javadoc.io/doc/com.google.code.gson/gson/).";
+  this.version            = "1.0.0";
+  // If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
+  this.viewParentLookup   = true;
+  // If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
+  this.layoutParentLookup = true;
+  // Module Entry Point
+  this.entryPoint         = "cfboom/gson";
+  // Model Namespace
+  this.modelNamespace     = "cfboomGson";
+  // CF Mapping
+  this.cfmapping          = "cfboom/gson";
+  // Auto-map models
+  this.autoMapModels      = true;
+  // Module Dependencies
+  this.dependencies       = [ "cfboom-lang", "cfboom-util" ];
 
-    // Module Properties
-    this.title              = "cfboom gson";
-    this.author             = "Joel Tobey";
-    this.webURL             = "https://github.com/joeltobey/cfboom-gson";
-    this.description        = "The cfboom-gson module provides a wrapper facade to the gson project (https://www.javadoc.io/doc/com.google.code.gson/gson/).";
-    this.version            = "0.9.0";
-    // If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
-    this.viewParentLookup   = true;
-    // If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
-    this.layoutParentLookup = true;
-    // Module Entry Point
-    this.entryPoint         = "cfboom/gson";
-    // Model Namespace
-    this.modelNamespace     = "cfboomGson";
-    // CF Mapping
-    this.cfmapping          = "cfboom/gson";
-    // Auto-map models
-    this.autoMapModels      = true;
-    // Module Dependencies
-    this.dependencies       = [ "cfboom-lang" ];
+  function configure() {
 
-    function configure() {}
+    // module settings - stored in modules.name.settings
+    settings = {
+      "useJavaLoader" = false
+    };
 
-    /**
-     * Fired when the module is registered and activated.
-     */
-    function onLoad() {
-        try {
-            createObject("java", "com.google.gson.JsonPrimitive");
-        } catch (any ex) {
-            wirebox.getInstance( "loader@cbjavaloader" ).appendPaths( modulePath & "/lib" );
-        }
+  }
+
+  /**
+   * Fired when the module is registered and activated.
+   */
+  function onLoad() {
+
+    if ( !settings.useJavaLoader ) {
+
+      // Double check if we need to use `cbjavaloader`
+      try {
+        createObject("java", "com.google.gson.JsonPrimitive");
+      } catch ( any ex ) {
+        settings.useJavaLoader = true;
+        wirebox.getInstance( "loader@cbjavaloader" ).appendPaths( modulePath & "/lib" );
+      }
+
     }
 
-    /**
-     * Fired when the module is unregistered and unloaded
-     */
-    function onUnload(){}
+    // Map the GSON javaloader
+    binder.map( "JavaLoader@cfboomGson" )
+          .to( "cfboom.util.JavaLoader" )
+          .initWith( useJavaLoader = settings.useJavaLoader )
+          .asSingleton();
+
+    // Map cfboom-gson classes
+    binder.map("JsonParser@cfboomGson").to("cfboom.gson.JsonParser");
+    binder.map("GsonUtils@cfboomGson").to("cfboom.gson.GsonUtils");
+    binder.map("Gson@cfboomGson").to("cfboom.gson.Gson");
+
+  }
+
+  /**
+   * Fired when the module is unregistered and unloaded
+   */
+  function onUnload(){}
 
 }
