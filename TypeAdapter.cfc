@@ -38,7 +38,7 @@ component abstract="true"
    * @abstract
    */
   public any function createInstance( required string class ) {
-    throw( "Abstract method. Need to implement." );
+    throw(object=createObject("java", "java.lang.AbstractMethodError").init("Must override template method 'createInstance' in subclass."));
   }
 
   /**
@@ -52,6 +52,6 @@ component abstract="true"
    * @abstract
    */
   public any function serialize( required any src, string typeOfSrc ) {
-    throw( "Abstract method. Need to implement." );
+    throw(object=createObject("java", "java.lang.AbstractMethodError").init("Must override template method 'serialize' in subclass."));
   }
 }

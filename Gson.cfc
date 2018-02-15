@@ -85,11 +85,15 @@ component singleton="true"
    * @return Json representation of src.
    */
   public string function toJson( required any src ) {
-    var class = isInstanceOf( src, "cfboom.lang.Object" ) ? src.getComponentName() : getMetadata( src ).fullname;
-    var typeAdapter = _instance.typeAdapters.default;
-    if ( structKeyExists( _instance.typeAdapters, class ) )
-      typeAdapter = _instance.typeAdapters[ class ];
-    return typeAdapter.serialize( src, class ).toString();
+    if ( isInstanceOf( src, "com.google.gson.JsonElement" ) ) {
+      return _instance.gson.toJson( src );
+    } else {
+      var class = isInstanceOf( src, "cfboom.lang.Object" ) ? src.getComponentName() : getMetadata( src ).fullname;
+      var typeAdapter = _instance.typeAdapters.default;
+      if ( structKeyExists( _instance.typeAdapters, class ) )
+        typeAdapter = _instance.typeAdapters[ class ];
+      return typeAdapter.serialize( src, class ).toString();
+    }
   }
 
   /**
