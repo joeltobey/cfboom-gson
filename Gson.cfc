@@ -86,7 +86,7 @@ component singleton="true"
    */
   public string function toJson( required any src ) {
     if ( isInstanceOf( src, "com.google.gson.JsonElement" ) ) {
-      return _instance.gson.toJson( src ).replaceAll("\\n", "\n");
+      return _instance.gson.toJson( src );
     } else {
       var class = isInstanceOf( src, "cfboom.lang.Object" ) ? src.getComponentName() : getMetadata( src ).fullname;
       var typeAdapter = _instance.typeAdapters.default;
